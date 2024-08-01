@@ -32,10 +32,14 @@ wget -P data/datasets/ https://huggingface.co/datasets/anon8231489123/ShareGPT_V
 # --enforce-eager \
 
 sudo apt update
-sudo apt install nginx
-mv vllm_server/ngnix.text /etc/ngnix/sites-available/default
+sudo apt install nginx lsof
+mv vllm_server/nginx.text /etc/nginx/sites-available/default
+service nginx restart
+
+source ~/.bashrc
+
 
 # run server on port 9000, ngnix on port 8000 and forward traffic
 
 # server 
-# python -m vllm_server.server --host 127.0.0.1 --port 9000 --download-dir data/llm_cache/ --model neuralmagic/Meta-Llama-3-70B-Instruct-FP8
+# python -m vllm_server.server --host 127.0.0.1 --port 9000 --download-dir data/llm_cache/ --model neuralmagic/Meta-Llama-3.1-70B-Instruct-FP8 --max-model-len 32000

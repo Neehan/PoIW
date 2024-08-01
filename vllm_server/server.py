@@ -16,6 +16,10 @@ from prometheus_client import make_asgi_app
 from starlette.routing import Mount
 
 import os
+import dotenv
+
+dotenv.load_dotenv()
+
 from vllm.engine.arg_utils import AsyncEngineArgs
 from vllm.engine.async_llm_engine import AsyncLLMEngine
 from vllm.entrypoints.logger import RequestLogger
