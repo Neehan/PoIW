@@ -11,8 +11,6 @@ services:
       - ADMIN_PASSWORD
     expose:
       - "9001"  # Expose only within the Docker network
-    ports:
-      - "9001:9001"
     command: uvicorn main:app --host 0.0.0.0 --port 9001
 
   # vllm-openai:
