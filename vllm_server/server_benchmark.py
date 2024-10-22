@@ -913,14 +913,14 @@ if __name__ == "__main__":
     parser.add_argument(
         "--dataset-path",
         type=str,
-        default=None,
+        default="data/datasets/ShareGPT_V3_unfiltered_cleaned_split.json",
         help="Path to the sharegpt/sonnet dataset. "
         "Or the huggingface dataset ID if using HF dataset.",
     )
     parser.add_argument(
         "--max-concurrency",
         type=int,
-        default=None,
+        default=8,
         help="Maximum number of concurrent requests. This can be used "
         "to help simulate an environment where a higher level component "
         "is enforcing a maximum number of concurrent requests. While the "
@@ -935,6 +935,7 @@ if __name__ == "__main__":
         "--model",
         type=str,
         required=True,
+        default="neuralmagic/Meta-Llama-3.1-8B-Instruct-FP8",
         help="Name of the model.",
     )
     parser.add_argument(
