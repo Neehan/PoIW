@@ -920,7 +920,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--max-concurrency",
         type=int,
-        default=8,
+        default=None,
         help="Maximum number of concurrent requests. This can be used "
         "to help simulate an environment where a higher level component "
         "is enforcing a maximum number of concurrent requests. While the "
@@ -971,7 +971,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--request-rate",
         type=float,
-        default=float("inf"),
+        default=float(8.0),
         help="Number of requests per second. If this is inf, "
         "then all the requests are sent at time 0. "
         "Otherwise, we use Poisson process to synthesize "
