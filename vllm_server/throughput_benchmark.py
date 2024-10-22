@@ -69,6 +69,8 @@ def sample_requests(
 def run_vllm(
     requests: List[Tuple[str, int, int]],
     model: str,
+    speculative_model: str,
+    num_speculative_tokens: int,
     tokenizer: str,
     quantization: Optional[str],
     tensor_parallel_size: int,
@@ -93,6 +95,8 @@ def run_vllm(
 
     llm = LLM(
         model=model,
+        speculative_model=speculative_model,
+        num_speculative_tokens=num_speculative_tokens,
         tokenizer=tokenizer,
         quantization=quantization,
         tensor_parallel_size=tensor_parallel_size,
@@ -255,6 +259,8 @@ def main(args: argparse.Namespace):
         elapsed_time = run_vllm(
             requests,
             args.model,
+            args.speculative_model,
+            args.num_speculative_tokens,
             args.tokenizer,
             args.quantization,
             args.tensor_parallel_size,
@@ -339,6 +345,12 @@ if __name__ == "__main__":
         "output length from the dataset.",
     )
     parser.add_argument("--model", type=str, default="EleutherAI/pythia-70m-deduped")
+    parser.add_argument(
+        "--speculative_model",
+        type=str,
+        default="neuralmagic/Meta-Llama-3.1-8B-Instruct-FP8",
+    )
+    parser.add_argument("--num_speculative_tokens", type=int, default=5)
     parser.add_argument("--tokenizer", type=str, default=None)
     parser.add_argument(
         "--quantization", "-q", choices=[*QUANTIZATION_METHODS, None], default=None
