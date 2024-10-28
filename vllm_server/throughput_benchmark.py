@@ -91,6 +91,7 @@ def run_vllm(
     gpu_memory_utilization: float = 0.9,
     download_dir: Optional[str] = None,
     load_format: str = EngineArgs.load_format,
+    max_num_seqs: int = 1024,  # Add max_num_seqs argument
 ) -> float:
 
     llm = LLM(
@@ -115,6 +116,7 @@ def run_vllm(
         max_num_batched_tokens=max_num_batched_tokens,
         distributed_executor_backend=distributed_executor_backend,
         load_format=load_format,
+        max_num_seqs=max_num_seqs,  # Pass max_num_seqs to LLM
     )
 
     # Add the requests to the engine.
@@ -281,6 +283,7 @@ def main(args: argparse.Namespace):
             args.gpu_memory_utilization,
             args.download_dir,
             args.load_format,
+            args.max_num_seqs,  # Pass max_num_seqs argument
         )
     elif args.backend == "hf":
         assert args.tensor_parallel_size == 1
@@ -495,6 +498,12 @@ if __name__ == "__main__":
         "section for more information.\n"
         '* "bitsandbytes" will load the weights using bitsandbytes '
         "quantization.\n",
+    )
+    parser.add_argument(
+        "--max-num-seqs",
+        type=int,
+        default=1024,
+        help="Maximum number of sequences to process in parallel",
     )
     args = parser.parse_args()
     if args.tokenizer is None:
